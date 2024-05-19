@@ -1,0 +1,7 @@
+config {
+  type: "declaration",
+  database: "bigquery-public-data",
+  schema: "austin_crime",
+  name: "crime",
+  description: "raw crime table"
+}

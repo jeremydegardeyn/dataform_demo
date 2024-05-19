@@ -1,0 +1,7 @@
+config {
+  type: "declaration",
+  database: "strongsville-city-schools",
+  schema: "stackoverflo",
+  name: "badges",
+  description: "raw badges table"
+}

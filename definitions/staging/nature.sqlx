@@ -5,4 +5,4 @@ config {
 }
 
 select *
-from ${constants.PROJECT_ID}.${constants.DATASET}.nature
+from ${constants.TRG_PROJECT_ID}.${constants.DATASET}.nature
