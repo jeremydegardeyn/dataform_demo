@@ -1,0 +1,8 @@
+config {
+  type: "table",
+  schema: "dataform",
+  description: "BQ public data breathe.nature"
+}
+
+select *
+from ${constants.PROJECT_ID}.${constants.DATASET}.nature
