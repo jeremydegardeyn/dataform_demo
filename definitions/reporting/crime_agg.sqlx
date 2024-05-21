@@ -1,0 +1,89 @@
+config {
+    type: "table",
+    schema: 'dataform',
+    //disabled: true,
+    bigquery: {
+        partitionBy: "date(max_dt)",
+        clusterBy: ["primary_type", "district"],
+        requirePartitionFilter: false,
+        partitionExpirationDays: 30,
+        labels: {
+        "loc": "austin",
+        "dept": "analytics"
+        }
+    },
+    tags: ['aggregate','test'],
+}
+
+pre_operations {
+    declare cols_ar array<struct<column_name string, data_type string>>;
+    declare cols_ar_len int64;
+    declare i int64;
+
+    drop table if exists ${self()};
+
+    begin
+    create temp table col_profile_results(column_name string, data_type string, distinct_vals string);
+    end;
+
+    set cols_ar = (
+    with all_columns as (
+        select column_name, data_type
+        from strongsville-city-schools.dataform.INFORMATION_SCHEMA.COLUMNS
+        where table_name = 'crime'
+    )
+    select array_agg(struct(column_name, data_type)) as columns
+    from all_columns
+    );
+    set cols_ar_len = array_length(cols_ar);
+    set i = 0;
+
+    while i < cols_ar_len do
+        execute immediate format("""
+            insert into col_profile_results
+            select '%s' column_name,'%s' data_type, string_agg(f) distinct_vals
+            from 
+            (
+                select distinct cast(%s as string) f 
+                from strongsville-city-schools.dataform.crime 
+                limit 10
+            ) q  
+        """, 
+        cols_ar[offset(i)].column_name, cols_ar[offset(i)].data_type, cols_ar[offset(i)].column_name
+        );
+
+        set i = i + 1;
+    end while;
+
+
+
+    alter table dataform.crime add column if not exists dt datetime;
+    alter table dataform.crime add column if not exists cdt datetime;
+
+    update ${ref("crime")} set 
+        dt = datetime(timestamp, 'EST'), 
+        cdt = datetime(clearance_date, 'EST')
+    where 1=1;
+
+    update ${ref("crime")}
+        set primary_type = 'Agg Assault'
+    where primary_type = 'Aggravated Assault';
+}
+
+${mapping.render_script(
+    ref("crime"),
+    ["primary_type", "district"], //group by
+    ["year", "cdt"], //min agg cols
+    ["year", "dt"], //max agg cols
+    ["description", "unique_key"] //dcount agg cols
+)}
+
+post_operations {
+    delete
+    from dataform.crime_agg
+    where ifnull(date_diff(max_dt, min_cdt, day),-1) < 0;
+
+    create or replace table dataform.crime_data_profile as (
+        select * from col_profile_results
+    );
+}

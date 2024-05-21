@@ -1,0 +1,11 @@
+config {
+    type: "table",
+    schema: 'dataform',
+}
+
+select
+  products_brand_name,
+  max(date_created) max_date,
+  count(*) as c
+from ${ref("stg_fda_food_events")}
+group by products_brand_name
