@@ -83,6 +83,8 @@ post_operations {
     from dataform.crime_agg
     where ifnull(date_diff(max_dt, min_cdt, day),-1) < 0;
 
+    drop table if exists dataform.crime_data_profile;
+
     create or replace table dataform.crime_data_profile as (
         select * from col_profile_results
     );
