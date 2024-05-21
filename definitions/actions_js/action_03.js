@@ -1,6 +1,6 @@
-const { TRG_PROJECT_ID,DATASET } = require("includes/constants.js");
+const { SRC_PROJECT_ID,DQ_DATASET } = require("includes/constants.js");
 
-var q = "select * from "+TRG_PROJECT_ID+"."+DATASET+".springer";
+var q = "select * from "+SRC_PROJECT_ID+"."+DQ_DATASET+".springer";
 
 
 
