@@ -60,12 +60,12 @@ pre_operations {
     alter table dataform.crime add column if not exists dt datetime;
     alter table dataform.crime add column if not exists cdt datetime;
 
-    update ${ref("crime")} set 
+    update dataform.crime set 
         dt = datetime(timestamp, 'EST'), 
         cdt = datetime(clearance_date, 'EST')
     where 1=1;
 
-    update ${ref("crime")}
+    update dataform.crime
         set primary_type = 'Agg Assault'
     where primary_type = 'Aggravated Assault';
 }
