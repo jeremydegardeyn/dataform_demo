@@ -1,0 +1,7 @@
+config {
+  type: "table",
+  schema: "reporting"
+}
+
+select *
+from ${ref("springer")}

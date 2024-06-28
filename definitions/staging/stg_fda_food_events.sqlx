@@ -1,0 +1,16 @@
+config {
+    type: "operations",
+    hasOutput: true
+}
+
+-- this model is of operations type
+-- this one has output but it is ok if operations models do not
+-- much like a stored procedure, you can have multiple procedural lines in here
+-- that includes temp tables and dynamic sql
+-- this particular operation just happens to act as a view materialization
+
+create or replace view ${self()} as (
+  select date_created, products_brand_name, outcomes, count(*) c
+  from `bigquery-public-data.fda_food.food_events`
+  group by date_created, products_brand_name, outcomes
+)
