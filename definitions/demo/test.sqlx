@@ -1,0 +1,16 @@
+-- write me a merge query that does a partition replace for dataform.crime for any partition values coming in from stg
+MERGE INTO dataform.crime AS T1 
+USING ${ref("crime")} AS T2 ON T1.unique_key = T2.unique_key 
+WHEN MATCHED THEN UPDATE 
+    SET T1.address = T2.address, 
+    T1.census_tract = T2.census_tract, 
+    T1.clearance_date = T2.clearance_date, 
+    T1.clearance_status = T2.clearance_status, 
+    T1.council_district_code = T2.council_district_code, 
+    T1.description = T2.description, 
+    T1.district = T2.district, 
+    T1.latitude = T2.latitude, 
+    T1.longitude = T2.longitude, 
+    T1.location = T2.location, T1.location_description = T2.location_description, 
+    T1.primary_type = T2.primary_type, T1.timestamp = T2.timestamp, T1.x_coordinate = T2.x_coordinate, 
+    T1.y_coordinate = T2.y_coordinate, T1.year = T2.year, T1.zipcode = T2.zipcode

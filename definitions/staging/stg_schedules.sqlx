@@ -1,0 +1,14 @@
+config {
+  type: "incremental",
+  schema: "staging",
+  uniqueKey: ["gameId"]
+}
+
+select *
+from ${ref('schedules')}
+${
+  when(
+    incremental(),
+    `where startTime > (select max(startTime) from ${self()})`
+  ) 
+}
