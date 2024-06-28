@@ -71,7 +71,7 @@ pre_operations {
 }
 
 ${mapping.render_script(
-    ref("crime"),
+    'dataform.crime',
     ["primary_type", "district"], //group by
     ["year", "cdt"], //min agg cols
     ["year", "dt"], //max agg cols
