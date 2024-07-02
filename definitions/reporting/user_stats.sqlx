@@ -5,7 +5,21 @@ config {
   description: "Create a summary table for all users including statistics on questions, answeers and badges received.",
   assertions: {
     uniqueKey: ["user_id"],
-    rowConditions: ["badge_count >= 0"]
+    rowConditions: ["badge_count >= 0"],
+    /*dataFreshnessConditions: {
+      "first_table": {
+        "dateColumn": "updated_date",
+        "timeUnit": "DAY",
+        "delayCondition": 1,
+        "timeZone": "America/Los_Angeles"
+      },
+      "second_table": {
+        "dateColumn": "TIMESTAMP(updated_date)",
+        "timeUnit": "HOUR",
+        "delayCondition": 3,
+      }
+    }
+    */
   }
 }
 
