@@ -1,11 +1,8 @@
 config {
   type: "view",
-  schema: "reporting",
-  materialized: true,
-  bigquery: {
-    /*partitionBy: "date(created_at)",*/
-    clusterBy: ["type"]
-  }
+  database: "strongsville-city-schools",
+  schema: "demo",
+  materialized: true
 }
 
 SELECT *
