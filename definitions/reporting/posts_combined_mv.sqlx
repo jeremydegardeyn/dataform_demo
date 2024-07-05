@@ -2,8 +2,8 @@ config {
   type: "view", 
   materialized: true,
   bigquery: {
-    partitionBy: "date_reference",
-    clusterBy: ["country"]
+    partitionBy: "date(created_at)",
+    clusterBy: ["type"]
   }
 }
 
