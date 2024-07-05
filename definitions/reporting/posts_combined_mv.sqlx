@@ -1,5 +1,6 @@
 config {
-  type: "view", 
+  type: "view",
+  schema: "reporting",
   materialized: true,
   bigquery: {
     /*partitionBy: "date(created_at)",*/
