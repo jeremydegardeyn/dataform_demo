@@ -2,7 +2,7 @@ config {
   type: "view", 
   materialized: true,
   bigquery: {
-    partitionBy: "date(created_at)",
+    /*partitionBy: "date(created_at)",*/
     clusterBy: ["type"]
   }
 }
