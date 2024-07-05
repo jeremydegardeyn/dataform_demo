@@ -9,5 +9,5 @@ config {
 }
 
 SELECT *
-FROM ${ref("stg_posts_answers")}
+FROM ${ref("posts_combined")}
 WHERE title like '%bash%'
