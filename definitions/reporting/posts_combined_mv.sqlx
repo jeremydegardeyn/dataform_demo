@@ -1,0 +1,12 @@
+config {
+  type: "view", 
+  materialized: true,
+  bigquery: {
+    partitionBy: "date_reference",
+    clusterBy: ["country"]
+  }
+}
+
+SELECT *
+FROM ${ref("stg_posts_answers")}
+WHERE title like '%bash%'
