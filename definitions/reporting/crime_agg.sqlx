@@ -1,6 +1,6 @@
 config {
     type: "table",
-    schema: 'dataform',
+    schema: 'dataform', 
     //disabled: true,
     bigquery: {
         partitionBy: "date(max_dt)",

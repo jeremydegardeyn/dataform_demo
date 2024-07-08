@@ -1,3 +1,5 @@
+const { TRG_PROJECT_ID,DQ_DATASET } = require("includes/constants.js");
+
 publish("test_table2")
   .schema("dataform")
   .query("SELECT 1 AS test") // Defines the query
@@ -18,7 +20,7 @@ declare({
 
 assert("action_assertion1")
   .schema("dataform_assertions")
-  .query("select * from dataform.test_table2 where test is null")
+  .query("select * from "+TRG_PROJECT_ID+".dataform.test_table2 where test is null")
   .dependencies(["test_table2"])
   ;
 
@@ -29,6 +31,6 @@ operate("action_operation1")
 
 test("action_test1")
   .dataset("test_table2")
-  .input("input_data", "select test from test_table2 where test = 1")
+  .input("input_data", "select test from "+TRG_PROJECT_ID+".dataform.test_table2 where test = 1")
   .expect("select 1 as test")
   ;

@@ -1,4 +1,4 @@
-const TRG_PROJECT_ID = 'strongsville-city-schools';
+var TRG_PROJECT_ID = 'strongsville-city-schools';
 const SRC_PROJECT_ID = "bigquery-public-data";
 const DATASET = 'dataform';
 const DQ_DATASET = "breathe";
