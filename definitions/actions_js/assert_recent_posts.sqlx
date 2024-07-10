@@ -1,0 +1,5 @@
+config { type: "assertion" }
+
+select 1
+from ${ref("posts_answers")}
+where date(creation_date) >= current_date()-1
