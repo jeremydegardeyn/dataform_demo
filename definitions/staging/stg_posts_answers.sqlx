@@ -1,5 +1,5 @@
 config {
-  type: "view",
+  type: "table",
   schema: "staging",
   description: "Cleaned version of stackoverflow.posts_answers",
   dependencies: ["assert_recent_posts"]
