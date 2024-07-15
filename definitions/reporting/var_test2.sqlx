@@ -1,3 +1,4 @@
-select fruit as my_data, "${dataform.projectConfig.vars.do_full_refresh}"
+select 
+ ${when(dataform.projectConfig.vars.do_full_refresh=='true',`'t'`,`'f'`)}
 from dataform.test_table
-${when(!dataform.projectConfig.vars.do_full_refresh, `where fruit = 'bananas'`, ``) }
+limit 1

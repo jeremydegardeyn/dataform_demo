@@ -4,7 +4,7 @@ defaultDataset: dataform
 defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.0-beta.4
 vars:
-  do_full_refresh: "false"
+  do_full_refresh: "true"
   executionProject: "dev"
   raw: "llb-gcp-edp-raw-dev"
   work: "llb-gcp-edp-work-dev"

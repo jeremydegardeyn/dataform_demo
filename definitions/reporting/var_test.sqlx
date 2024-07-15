@@ -6,16 +6,15 @@ config {
 }
 
 pre_operations {
-    if ${dataform.projectConfig.vars.do_full_refresh} = false
+    if ${dataform.projectConfig.vars.do_full_refresh} = true
     then
-        select 'hello world';
-    else
         truncate table dataform.var_test;
     end if
 }
 
 select fruit as my_data
 from dataform.test_table
-${when(!dataform.projectConfig.vars.do_full_refresh, `where fruit = 'bananas'`, ``) }
+${when(dataform.projectConfig.vars.do_full_refresh=='false',`where fruit = 'bananas'`,``)}
+
 
 
