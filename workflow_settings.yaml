@@ -7,4 +7,4 @@ vars:
   executionProject: dev
   raw: llb-gcp-edp-raw-dev
   work: llb-gcp-edp-work-dev
-  obt": llb-gcp-edp-obt-dev
+  obt: llb-gcp-edp-obt-dev
