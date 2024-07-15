@@ -1,7 +1,8 @@
 config {
     type: "incremental",
     protected: true,
-    schema: 'dataform'
+    schema: 'dataform',
+    tags: ['var_test']
 }
 
 pre_operations {
