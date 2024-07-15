@@ -16,6 +16,6 @@ pre_operations {
 
 select fruit as my_data
 from dataform.test_table
-${when(dataform.projectConfig.vars.do_full_refresh, `where fruit = 'bananas'`, ``) }
+${when(!dataform.projectConfig.vars.do_full_refresh, `where fruit = 'bananas'`, ``) }
 
 
