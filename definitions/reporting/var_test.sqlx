@@ -14,4 +14,8 @@ pre_operations {
     end if
 }
 
-SELECT 'my data' my_data
+select fruit as my_data
+from dataform.test_table
+${when(dataform.projectConfig.vars.do_full_refresh, `where fruit = 'bananas'`, ``) }
+
+
