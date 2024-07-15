@@ -1,0 +1,16 @@
+config {
+    type: "incremental",
+    protected: true,
+    schema: 'dataform'
+}
+
+pre_operations {
+    if ${dataform.projectConfig.vars.do_full_refresh} = false
+    then
+        select 'hello world';
+    else
+        truncate table dataform.var_test;
+    end if
+}
+
+SELECT 'my data' my_data
