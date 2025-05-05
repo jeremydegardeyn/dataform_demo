@@ -1,0 +1,17 @@
+config {
+  type: "test",
+  dataset: "food_events"
+}
+-- use input to mock some test dauta sed by the view
+-- notice food_events is a view on top of stg_fda_food_events
+-- so we need to supply the mock data below to the stg_fda_food_events table
+input "stg_fda_food_events" {
+    select
+  '{"products_brand_name":"LL Bean","max_date":current_date(),"c":42}' as src
+}
+-- run the view and we expect to get:
+select
+     "LL Bean" as products_brand_name
+    ,current_date() as max_date
+    ,42 as c
+;

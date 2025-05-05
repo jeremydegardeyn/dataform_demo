@@ -1,0 +1,23 @@
+config {
+  type: "incremental",
+  columns: {
+    column1: {
+      bigqueryPolicyTags: [policy_tags.policy_tag01]
+    }
+  }
+} 
+
+pre_operations {
+
+  create table if not exists `${policy_tags.datagovProject}.dataform.policy_tag` (
+    id int64,
+    column1 string
+  )
+  
+}
+
+select
+  id,
+  column1
+from `strongsville-city-schools.dataform.policy_tag`
+where id is null

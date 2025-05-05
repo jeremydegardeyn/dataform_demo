@@ -1,16 +1,52 @@
--- This is an example SQLX file to help you learn the basics of Dataform.
--- Visit https://cloud.google.com/dataform/docs/sql-workflows for more information on how to configure your SQL workflow.
-
--- You can delete this file, then commit and push your changes to your repository when you are ready.
-
--- Config blocks allow you to configure, document, and test your data assets.
 config {
-  type: "view", // Creates a view in BigQuery. Try changing to "table" instead.
+  type: "table",
+
   columns: {
-    test: "A description for the test column", // Column descriptions are pushed to BigQuery.
+    int_1: {
+        bigqueryPolicyTags: ["projects/strongsville-city-schools/locations/us/taxonomies/8678378231237580896/policyTags/3363490109226205199"]
+    },
+    struct_1: {
+      columns: {
+        nested_struct: {
+          columns: {
+            array_2: {
+                bigqueryPolicyTags: ["projects/strongsville-city-schools/locations/us/taxonomies/8678378231237580896/policyTags/5641304534866435701"]
+            }
+          }
+        }
+
+      }
+    }
   }
+
 }
 
--- The rest of a SQLX file contains your SELECT statement used to create the table.
-
-SELECT 1 as test
+select 
+  '1' as int_1, 
+  struct(
+    's1' as field_1,
+    [1,2,3,4,5] as array_1,
+    struct(
+      'ns1' as field_2,
+      ['a','b','c'] as array_2
+    ) as nested_struct
+  ) as struct_1
+-- select '1' as int_1, struct(array_agg(struct_1.field_1) as array_1) as struct_1
+-- from
+-- (
+--   select struct('x' as field_1) as struct_1
+--   union all
+--   select struct('y' as field_1) as struct_1
+--   union all
+--   select struct('z' as field_1) as struct_1
+-- ) q
+--select struct('x' as field_1) as struct_1
+-- select '1' as int_1, array_agg(struct_1.field_1) rep_struct_1
+-- from
+-- (
+--   select struct('x' as field_1) as struct_1
+--   union all
+--   select struct('y' as field_1) as struct_1
+--   union all
+--   select struct('z' as field_1) as struct_1
+-- ) q
