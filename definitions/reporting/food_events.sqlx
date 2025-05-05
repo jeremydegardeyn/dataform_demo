@@ -1,6 +1,7 @@
 config {
     type: "table",
     schema: 'dataform',
+    tags: ['aggregate'],
 }
 
 select

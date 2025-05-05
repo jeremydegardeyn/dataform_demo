@@ -1,0 +1,10 @@
+config {
+  type: "view",
+  database: "strongsville-city-schools",
+  schema: "demo",
+  materialized: true
+}
+
+SELECT *
+FROM ${ref("posts_combined")}
+WHERE title like '%bash%'

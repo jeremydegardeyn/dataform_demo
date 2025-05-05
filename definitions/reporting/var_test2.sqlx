@@ -1,0 +1,4 @@
+select 
+ ${when(dataform.projectConfig.vars.do_full_refresh=='true',`'t'`,`'f'`)}
+from dataform.test_table
+limit 1

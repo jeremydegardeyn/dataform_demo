@@ -1,0 +1,20 @@
+config {
+    type: "incremental",
+    protected: true,
+    schema: 'dataform',
+    tags: ['var_test']
+}
+
+pre_operations {
+    if ${dataform.projectConfig.vars.do_full_refresh} = true
+    then
+        truncate table dataform.var_test;
+    end if
+}
+
+select fruit as my_data
+from dataform.test_table
+${when(dataform.projectConfig.vars.do_full_refresh=='false',`where fruit = 'bananas'`,``)}
+
+
+
