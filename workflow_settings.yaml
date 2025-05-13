@@ -2,7 +2,7 @@ defaultProject: strongsville-city-schools
 defaultLocation: US
 defaultDataset: dataform
 defaultAssertionDataset: dataform_assertions
-dataformCoreVersion: 3.0.0-beta.4
+dataformCoreVersion: 3.0.2
 vars:
   do_full_refresh: "false"
   executionProject: "dev"
