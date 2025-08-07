@@ -1,0 +1,6 @@
+config {
+  type: "declaration",
+  database: "strongsvile-city-schools",
+  schema: "dssrpm_shop_floor_inspection",
+  name: "stg_emp_master"
+}

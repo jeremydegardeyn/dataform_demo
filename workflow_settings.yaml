@@ -2,10 +2,6 @@ defaultProject: strongsville-city-schools
 defaultLocation: US
 defaultDataset: dataform
 defaultAssertionDataset: dataform_assertions
-dataformCoreVersion: 3.0.2
 vars:
   do_full_refresh: "false"
   executionProject: "dev"
-  raw: "llb-gcp-edp-raw-dev"
-  work: "llb-gcp-edp-work-dev"
-  obt: "llb-gcp-edp-obt-dev"
