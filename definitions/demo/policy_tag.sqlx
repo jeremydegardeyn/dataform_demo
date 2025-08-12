@@ -1,23 +1,56 @@
 config {
   type: "incremental",
   columns: {
-    column1: {
-      bigqueryPolicyTags: [policy_tags.policy_tag01]
+    id: {
+      bigqueryPolicyTags: [policy_tags.policy_tag02]
+    },
+    array1: {
+      bigqueryPolicyTags: [policy_tags.policy_tag03]
+    },
+    struct1: {
+      columns: {
+        column2: {
+          bigqueryPolicyTags: [policy_tags.policy_tag04]
+        },
+        column4: {
+          bigqueryPolicyTags: [policy_tags.policy_tag05]
+        }
+      }
+    },
+    struct2: {
+      columns: {
+        column6: {
+          bigqueryPolicyTags: [policy_tags.policy_tag04]
+        }
+      }
+    },
+    column7: {
+      bigqueryPolicyTags: [policy_tags.policy_tag03]
     }
   }
-} 
-
-pre_operations {
-
-  create table if not exists `${policy_tags.datagovProject}.dataform.policy_tag` (
-    id int64,
-    column1 string
-  )
-  
 }
 
-select
-  id,
-  column1
-from `strongsville-city-schools.dataform.policy_tag`
-where id is null
+pre_operations {
+  create table if not exists `${policy_tags.datagovProject}.dataform.policy_tag` (
+    id int64,
+    array1 array<string>,
+    struct1 array<struct<
+      column2 int64,
+      column3 string,
+      column4 date
+    >>,
+    struct2 struct<
+      column5 string,
+      column6 int64
+    >,
+    column7 string
+  )
+}
+
+select *
+from `strongsville-city-schools.dataform.wt_policy_tag` src
+where not exists(
+  select 1 
+  from `strongsville-city-schools.dataform.policy_tag` trg
+  where trg.id = src.id
+)

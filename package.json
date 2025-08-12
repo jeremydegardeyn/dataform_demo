@@ -1,7 +1,6 @@
 {
-    "name": "dataform-scd",
     "dependencies": {
-        "@dataform/core": "3.0.2",
-        "dataform-scd":"0.5"
+        "@google-cloud/bigquery": "8.1.1",
+        "@google-cloud/datacatalog": "4.3.0"
     }
 }
