@@ -9,23 +9,53 @@ config {
     },
     struct1: {
       columns: {
-        column2: {
+        column3: {
           bigqueryPolicyTags: [policy_tags.policy_tag04]
-        },
-        column4: {
-          bigqueryPolicyTags: [policy_tags.policy_tag05]
         }
       }
     },
     struct2: {
       columns: {
-        column6: {
+        column5: {
           bigqueryPolicyTags: [policy_tags.policy_tag04]
         }
       }
     },
     column7: {
       bigqueryPolicyTags: [policy_tags.policy_tag03]
+    },
+    struct3: {
+      columns: {
+        sub1: {
+          columns: {
+            subcol1: {
+              bigqueryPolicyTags: [policy_tags.policy_tag03]
+            },
+            subcol2: {
+              columns: {
+                subsub2: {
+                  bigqueryPolicyTags: [policy_tags.policy_tag04]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    struct4: {
+      columns: {
+        deep1: {
+          columns: {
+            deepcol2: {
+              columns: {
+                deepdeep2: {
+                  bigqueryPolicyTags: [policy_tags.policy_tag04]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -43,7 +73,27 @@ pre_operations {
       column5 string,
       column6 int64
     >,
-    column7 string
+    column7 string,
+    struct3 array<struct<
+      sub1 array<struct<
+        subcol1 string,
+        subcol2 array<struct<
+          subsub1 int64,
+          subsub2 string
+        >>
+      >>,
+      sub2 date
+    >>,
+    struct4 struct<
+      deep1 array<struct<
+        deepcol1 string,
+        deepcol2 array<struct<
+          deepdeep1 date,
+          deepdeep2 array<string>
+        >>
+      >>,
+      deep2 int64
+    >
   )
 }
 
@@ -54,3 +104,21 @@ where not exists(
   from `strongsville-city-schools.dataform.policy_tag` trg
   where trg.id = src.id
 )
+
+post_operations {
+  ${
+    require("../../includes/scrub_pi").generateRecursiveHashMergeSQL(
+      self(),
+      [
+        "array1",
+        "struct1.column3",
+        "struct2.column5",
+        "column7",
+        "struct3.sub1.subcol1",
+        "struct3.sub1.subcol2.subsub2",
+        "struct4.deep1.deepcol2.deepdeep2"
+      ],
+      [{"name":"id","type":"INTEGER"},{"name":"array1","type":"STRING","mode":"REPEATED"},{"name":"struct1","type":"RECORD","mode":"REPEATED","fields":[{"name":"column2","type":"INTEGER"},{"name":"column3","type":"STRING"},{"name":"column4","type":"DATE"}]},{"name":"struct2","type":"RECORD","fields":[{"name":"column5","type":"STRING"},{"name":"column6","type":"INTEGER"}]},{"name":"column7","type":"STRING"},{"name":"struct3","type":"RECORD","mode":"REPEATED","fields":[{"name":"sub1","type":"RECORD","mode":"REPEATED","fields":[{"name":"subcol1","type":"STRING"},{"name":"subcol2","type":"RECORD","mode":"REPEATED","fields":[{"name":"subsub1","type":"INTEGER"},{"name":"subsub2","type":"STRING"}]}]},{"name":"sub2","type":"DATE"}]},{"name":"struct4","type":"RECORD","fields":[{"name":"deep1","type":"RECORD","mode":"REPEATED","fields":[{"name":"deepcol1","type":"STRING"},{"name":"deepcol2","type":"RECORD","mode":"REPEATED","fields":[{"name":"deepdeep1","type":"DATE"},{"name":"deepdeep2","type":"STRING","mode":"REPEATED"}]}]},{"name":"deep2","type":"INTEGER"}]}]
+    )
+  }
+}
