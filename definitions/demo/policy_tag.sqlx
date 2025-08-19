@@ -2,39 +2,39 @@ config {
   type: "incremental",
   columns: {
     id: {
-      bigqueryPolicyTags: [policy_tags.policy_tag02]
+      bigqueryPolicyTags: [policy_tags.regulatory_delete_customer_id]
     },
     array1: {
-      bigqueryPolicyTags: [policy_tags.policy_tag03]
+      bigqueryPolicyTags: [policy_tags.email_address_id]
     },
     struct1: {
       columns: {
         column3: {
-          bigqueryPolicyTags: [policy_tags.policy_tag04]
+          bigqueryPolicyTags: [policy_tags.first_name]
         }
       }
     },
     struct2: {
       columns: {
         column5: {
-          bigqueryPolicyTags: [policy_tags.policy_tag04]
+          bigqueryPolicyTags: [policy_tags.last_name]
         }
       }
     },
     column7: {
-      bigqueryPolicyTags: [policy_tags.policy_tag03]
+      bigqueryPolicyTags: [policy_tags.person_name]
     },
     struct3: {
       columns: {
         sub1: {
           columns: {
             subcol1: {
-              bigqueryPolicyTags: [policy_tags.policy_tag03]
+              bigqueryPolicyTags: [policy_tags.location]
             },
             subcol2: {
               columns: {
                 subsub2: {
-                  bigqueryPolicyTags: [policy_tags.policy_tag04]
+                  bigqueryPolicyTags: [policy_tags.street_address]
                 }
               }
             }
@@ -49,7 +49,7 @@ config {
             deepcol2: {
               columns: {
                 deepdeep2: {
-                  bigqueryPolicyTags: [policy_tags.policy_tag04]
+                  bigqueryPolicyTags: [policy_tags.phone_number]
                 }
               }
             }
@@ -97,13 +97,9 @@ pre_operations {
   )
 }
 
-select *
+select src.*
 from `strongsville-city-schools.dataform.wt_policy_tag` src
-where not exists(
-  select 1 
-  from `strongsville-city-schools.dataform.policy_tag` trg
-  where trg.id = src.id
-)
+
 
 post_operations {
   ${
