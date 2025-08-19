@@ -1,0 +1,13 @@
+config {
+  type: "table",
+}
+
+FROM `bigquery-public-data.thelook_ecommerce.order_items`
+|> WHERE status = 'Complete'
+|> EXTEND DATE(created_at) AS order_date
+|> AGGREGATE
+     COUNT(*) AS total_orders,
+     SUM(sale_price) AS total_sales
+   GROUP BY order_date, status
+|> ORDER BY total_sales DESC
+|> LIMIT 5

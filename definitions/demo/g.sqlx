@@ -1,0 +1,4 @@
+config {type: "table"}
+
+select '${policy_tags.datagovProject}' as a, * 
+from `strongsville-city-schools.dataform.policy_tag` 
